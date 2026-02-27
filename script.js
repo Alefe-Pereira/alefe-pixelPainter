@@ -370,7 +370,7 @@ function saveImage(format = 'png') {
     let rows      = containerDiv.querySelectorAll('.row');
     let numRows   = rows.length;
     let numCols   = rows[0].children.length;
-    let pixelSize = 1; // 1px real por célula → arquivo no tamanho exato da grade
+    let pixelSize = 10; // 1px real por célula → arquivo no tamanho exato da grade
 
     // Cria um <canvas> invisível (nunca inserido na página)
     // com o tamanho exato da grade em pixels reais
