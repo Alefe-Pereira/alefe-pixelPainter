@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- Declara que o documento é HTML5 -->
+
+<html lang="pt-BR">
+<!-- Define o idioma da página como português do Brasil -->
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Codificação UTF-8 para suportar acentos e caracteres especiais -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Permite que a página seja responsiva em dispositivos móveis -->
+
+    <title>Etch-a-Sketch</title>
+    <!-- Título da aba do navegador -->
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Link para o arquivo CSS que estiliza a página -->
+</head>
+
+<body>
+<!-- Corpo da página -->
+
+<header>
+    <h1>Etch-a-Sketch</h1>
+    <!-- Título principal do projeto -->
+</header>
+
+<section>
+    <!-- Card principal da página (estilizado pelo CSS) -->
+
+    <!-- ===== FORMULÁRIO DE GRID ===== -->
+    <div id="grid" class="grid">
+        <p>Grid size:</p>
+        <!-- Texto explicativo -->
+
+        <input type="text" id="user-number" class="user-number">
+        <!-- Input para o usuário digitar o tamanho da grid -->
+
+        <p id="copy-input"></p>
+        <!-- Parágrafo vazio, usado dinamicamente para mensagens -->
+
+        <button id="user-submit" class="user-submit">Submit</button>
+        <!-- Botão para enviar o tamanho da grid -->
+    </div>
+
+    <div>
+        <!-- Container de prompt, botões e canvas -->
+
+        <p id="prompt"></p>
+        <!-- Mensagens dinâmicas (ex: avisos ou erros) -->
+
+        <!-- ===== SELETOR DE CORES E BOTÃO CLEAR ===== -->
+        <div id="buttons">
+            <form id="button-container">
+                <!-- Grupo de inputs tipo radio para escolher a “caneta” -->
+                <input type="radio" id="black-color" name="pen" value="black-color">
+                <label for="black-color">Black</label>
+
+                <input type="radio" id="red-color" name="pen" value="red-color">
+                <label for="red-color">Red</label>
+
+                <input type="radio" id="blue-color" name="pen" value="blue-color">
+                <label for="blue-color">Blue</label>
+
+                <input type="radio" id="rainbow-color" name="pen" value="rainbow">
+                <label for="rainbow-color">Rainbow</label>
+
+                <input type="radio" id="eraser" name="pen" value="eraser">
+                <label for="eraser">Eraser</label>
+            </form>
+
+            <button id="clear-button">Clear</button>
+            <!-- Botão para limpar o canvas -->
+        </div>
+
+        <!-- ===== CANVAS ===== -->
+        <div class="canvas">
+            <div class="container">
+                <!-- Grid do Etch-a-Sketch será criada dinamicamente pelo JavaScript -->
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    <p>&copy; 2026 Alefe Pereira for TheOdinProject</p>
+    <!-- Rodapé com créditos -->
+</footer>
+
+<script src="script.js"></script>
+<!-- Arquivo JavaScript que controla a lógica do Etch-a-Sketch -->
+
+</body>
+</html>

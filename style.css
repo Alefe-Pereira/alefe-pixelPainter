@@ -1,0 +1,125 @@
+/* ===== BODY ===== */
+body {
+    margin: 0; /* Remove a margem padrão do navegador */
+    padding: 0; /* Remove o padding padrão */
+    background: rgb(72, 170, 167); /* Cor de fundo principal da página */
+    font: normal 15pt Arial; /* Define a fonte padrão do corpo da página */
+    display: flex; /* Transforma o body em um container flexível */
+    flex-direction: column; /* Organiza os elementos verticalmente */
+    align-items: center; /* Centraliza os elementos horizontalmente */
+}
+
+/* ===== HEADER ===== */
+header {
+    color: white; /* Cor do texto do cabeçalho */
+    text-align: center; /* Centraliza o texto do header */
+    margin-top: 20px; /* Espaço acima do header */
+}
+
+/* ===== SECTION (seu card principal) ===== */
+section {
+    background: white; /* Cor de fundo do card principal */
+    border-radius: 10px; /* Bordas arredondadas do card */
+    padding: 20px; /* Espaço interno do card */
+    width: 500px; /* Largura fixa do card */
+    margin: 20px auto; /* Margem em cima e embaixo; centraliza horizontalmente */
+    box-shadow: rgba(0, 0, 0, 0.436) 5px 5px 10px; /* Sombra para dar profundidade */
+
+    display: flex; /* Flex container interno */
+    flex-direction: column; /* Organiza os itens do card em coluna */
+    align-items: center; /* Centraliza itens horizontalmente */
+}
+
+/* ===== GRID ===== */
+.grid {
+    display: flex; /* Flex container para alinhar inputs e botões */
+    align-items: center; /* Alinha verticalmente os itens do grid */
+    justify-content: center; /* Centraliza horizontalmente */
+    margin-bottom: 10px; /* Espaço abaixo do grid */
+}
+
+.grid p {
+    margin: 0; /* Remove a margem padrão do parágrafo dentro do grid */
+}
+
+.user-number {
+    width: 40px; /* Largura do input numérico */
+    border: 2px solid rgb(71, 69, 69); /* Borda do input */
+    margin: 0 8px; /* Espaço lateral entre elementos */
+    border-radius: 4px; /* Bordas arredondadas do input */
+    text-align: center; /* Centraliza o número digitado */
+}
+
+.user-submit {
+    padding: 4px 8px; /* Espaço interno do botão */
+    background-color: rgb(220, 254, 255); /* Cor de fundo do botão */
+    border-radius: 4px; /* Bordas arredondadas do botão */
+    border: 2px solid rgb(71, 69, 69); /* Borda do botão */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+#copy-input {
+    margin-right: 10px; /* Espaço à direita do input para separar do botão */
+}
+
+/* ===== PROMPT ===== */
+#prompt {
+    font-size: 18px; /* Tamanho da fonte */
+    color: rgb(72, 170, 167); /* Cor  para  destacar */
+    text-align: center; /* Centraliza o texto */
+}
+
+/* ===== BOTÕES ===== */
+button {
+    padding: 4px 8px; /* Espaço interno do botão */
+    background-color: rgb(220, 254, 255); /* Cor de fundo */
+    border-radius: 4px; /* Bordas arredondadas */
+    border: 2px solid rgb(71, 69, 69); /* Borda do botão */
+    cursor: pointer; /* Cursor de mãozinha */
+}
+
+#buttons {
+    display: flex; /* Flex container para os botões */
+    align-items: center; /* Alinha verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-bottom: 15px; /* Espaço abaixo do container */
+    flex-wrap: wrap; /* Permite que os botões quebrem linha se necessário */
+}
+
+/* ===== CANVAS ===== */
+.canvas {
+    display: flex; /* Flex container para centralizar o canvas */
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+/* Área do desenho */
+.container {
+    height: 400px; /* Altura do canvas */
+    width: 400px; /* Largura do canvas */
+    display: flex; /* Flex container para linhas e colunas */
+    flex-direction: column; /* Organiza linhas em coluna */
+    border: 15px solid rgb(150, 142, 142); /* Borda grossa ao redor do canvas */
+    border-radius: 14px; /* Bordas arredondadas do canvas */
+}
+
+/* Linhas da grid */
+.row {
+    display: flex; /* Cada linha será flex container de colunas */
+    flex: 1; /* Cada linha ocupa igualmente o espaço disponível */
+}
+
+/* Células padrão */
+.column {
+    border: 1px solid rgb(243, 239, 239); /* Borda leve para separar células */
+    flex: 1; /* Cada coluna ocupa igualmente o espaço da linha */
+}
+
+
+/* ===== FOOTER ===== */
+footer {
+    color: white; /* Cor do texto do rodapé */
+    text-align: center; /* Centraliza o texto do footer */
+    font-style: italic; /* Deixa o texto em itálico */
+    margin-bottom: 20px; /* Espaço abaixo do footer */
+}
