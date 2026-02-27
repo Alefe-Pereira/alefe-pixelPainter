@@ -93,8 +93,14 @@
                     <button id="clear-button">Clear</button>
                     <!-- Limpa todo o canvas, voltando ao estado em branco -->
 
-                    <button id="save-button">💾 Save</button>
-                    <!-- Exporta o desenho atual como imagem (normalmente PNG) -->
+        <!-- Exporta o desenho atual como imagem (PNG, JPEG, WebP) -->
+                <select id="save-format">
+                    <option value="png">PNG</option>
+                    <option value="jpeg">JPEG</option>
+                    <option value="webp">WebP</option>
+                </select>
+                
+                <button id="save-button">💾 Save</button>
                 </div>
 
             </div>

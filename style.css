@@ -103,7 +103,6 @@ button {
 
 /* Cada célula (pixel) da grid */
 .column {
-    border: 1px solid rgb(243, 239, 239); /* Borda quase branca — divisória sutil entre pixels */
     flex: 1; /* Todas as células dividem igualmente a largura da linha */
 }
 

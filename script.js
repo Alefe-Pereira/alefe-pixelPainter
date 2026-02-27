@@ -15,6 +15,7 @@ let copyInput     = document.getElementById('copy-input');    // Exibe "x N" ao 
 let toolButtons   = document.querySelectorAll('.tool-btn');   // NodeList com todos os botões de ferramenta
 let clearButton   = document.getElementById('clear-button');
 let saveButton    = document.getElementById('save-button');
+let saveFormat    = document.getElementById('save-format');
 
 // ---- PALETA / GODET ----
 let colorPicker   = document.getElementById('color-picker');
@@ -54,7 +55,7 @@ toolButtons.forEach(button => {
 });
 
 clearButton.addEventListener('click', clearGrid);
-saveButton.addEventListener('click', saveImage);
+saveButton.addEventListener('click', () => saveImage(saveFormat.value));
 
 // ---- PALETA / GODET ----
 colorPicker.addEventListener('input', () => {
@@ -135,9 +136,13 @@ function draw() {
     let columns = document.querySelectorAll('.column');
 
     columns.forEach(cell => {
-        cell.addEventListener('mouseover', (e) => handleMouseOver(cell, e));
-        cell.addEventListener('mousedown', (e) => handleMouseDown(cell, e));
-        cell.addEventListener('mouseup',   (e) => handleMouseUp(cell, e));
+        cell.addEventListener('mouseover',  (e) => handleMouseOver(cell, e));
+        cell.addEventListener('mousedown',  (e) => handleMouseDown(cell, e));
+        cell.addEventListener('mouseup',    (e) => handleMouseUp(cell, e));
+
+        // Preview da cor ao passar o mouse
+        cell.addEventListener('mouseenter', () => handleMouseEnter(cell));
+        cell.addEventListener('mouseleave', () => handleMouseLeave(cell));
     });
 
     // Sem isso, arrastar o mouse selecionaria o texto da página em vez de desenhar
@@ -198,12 +203,43 @@ function handleMouseUp(cell) {
     state.lineStart = null;
 }
 
-// Centraliza a lógica de pintar/apagar para não repetir código em vários lugares
+function handleMouseEnter(cell) {
+    if (state.activeTool === 'eraser' || state.activeTool === 'eyedropper') return;
+
+    // Se o mouse está pressionado ao entrar na célula, pinta de verdade e não mostra preview
+    if (state.isDrawing) return;
+
+    // Guarda a cor original para restaurar se o usuário não clicar
+    cell.dataset.preview = cell.style.backgroundColor || '';
+
+    // Preview: mostra a cor com opacidade reduzida
+    cell.style.opacity = '0.6';
+    cell.style.backgroundColor = state.activeColor;
+}
+
+function handleMouseEnter(cell) {
+    if (state.activeTool === 'eraser' || state.activeTool === 'eyedropper') return;
+
+    // Usa outline em vez de backgroundColor — não interfere com a cor real do pixel
+    cell.style.outline = `2px solid ${state.activeColor}`;
+    cell.style.zIndex  = '1';
+}
+
+function handleMouseLeave(cell) {
+    // Remove o outline ao sair — restaura o visual sem tocar na cor
+    cell.style.outline = '';
+    cell.style.zIndex  = '';
+}
+
 function paintCell(cell) {
     if (state.activeTool === 'brush') {
         cell.style.backgroundColor = state.activeColor;
+        cell.style.outline = '';
+        cell.style.zIndex  = '';
     } else if (state.activeTool === 'eraser') {
-        cell.style.backgroundColor = ''; // String vazia remove o estilo inline → célula volta ao branco do CSS
+        cell.style.backgroundColor = '';
+        cell.style.outline = '';
+        cell.style.zIndex  = '';
     }
 }
 
@@ -327,36 +363,49 @@ function drawLine(startCell, endCell) {
 // ============================================================
 // O HTML não tem como exportar <div>s como imagem diretamente.
 // A solução é criar um <canvas> invisível, reproduzir os pixels nele,
-// e então converter para PNG.
+// e então converter para o formato escolhido.
 
-function saveImage() {
+function saveImage(format = 'png') {
+    // Pega todas as linhas da grade e calcula dimensões
     let rows      = containerDiv.querySelectorAll('.row');
     let numRows   = rows.length;
     let numCols   = rows[0].children.length;
-    let pixelSize = 10; // Cada célula da grade vira um bloco de 10x10px no arquivo final
+    let pixelSize = 1; // 1px real por célula → arquivo no tamanho exato da grade
 
-    let canvas    = document.createElement('canvas'); // Canvas nunca é inserido no DOM
+    // Cria um <canvas> invisível (nunca inserido na página)
+    // com o tamanho exato da grade em pixels reais
+    let canvas    = document.createElement('canvas');
     canvas.width  = numCols * pixelSize;
     canvas.height = numRows * pixelSize;
+    let ctx = canvas.getContext('2d'); // Interface de desenho do canvas
 
-    let ctx = canvas.getContext('2d'); // Contexto 2D: interface de desenho do canvas
+    // JPEG não suporta transparência — preenche o fundo de branco
+    // para evitar que células vazias virem preto no arquivo final
+    if (format === 'jpeg') {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
+    // Percorre cada célula da grade e reproduz sua cor no canvas
     rows.forEach((row, rowIndex) => {
         Array.from(row.children).forEach((cell, colIndex) => {
-            ctx.fillStyle = cell.style.backgroundColor || '#ffffff'; // Célula vazia = branco
+            let color = cell.style.backgroundColor || '#ffffff'; // Vazio = branco
+            ctx.fillStyle = color;
             ctx.fillRect(
-                colIndex * pixelSize, // x (posição horizontal em pixels reais)
-                rowIndex * pixelSize, // y (posição vertical em pixels reais)
+                colIndex * pixelSize, // x
+                rowIndex * pixelSize, // y
                 pixelSize,
                 pixelSize
             );
         });
     });
 
-    // Cria um <a> temporário e simula o clique para disparar o download
+    // Converte o canvas para base64 no formato escolhido pelo usuário
+    // e dispara o download via link temporário
+    let mimeType  = `image/${format}`;
     let link      = document.createElement('a');
-    link.download = 'pixel-paint.png';
-    link.href     = canvas.toDataURL('image/png'); // Converte o canvas para base64 PNG
+    link.download = `pixel-paint.${format}`;
+    link.href     = canvas.toDataURL(mimeType);
     link.click();
 }
 
@@ -385,5 +434,6 @@ function clearGrid() {
     let columns = document.getElementsByClassName("column");
     for (let i = 0; i < columns.length; i++) {
         columns[i].style.backgroundColor = ''; // String vazia remove o estilo inline
+        columns[i].style.opacity = '1';
     }
 }
