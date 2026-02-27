@@ -1,97 +1,155 @@
 <!DOCTYPE html>
-<!-- Declara que o documento é HTML5 -->
+<!-- Instrui o navegador a interpretar este arquivo como HTML5 (versão mais atual) -->
 
 <html lang="pt-BR">
-<!-- Define o idioma da página como português do Brasil -->
+<!-- Raiz do documento. O atributo lang ajuda leitores de tela e ferramentas de tradução -->
 
 <head>
+    <!-- O <head> não aparece na página — guarda configurações e metadados -->
+
     <meta charset="UTF-8">
-    <!-- Codificação UTF-8 para suportar acentos e caracteres especiais -->
+    <!-- Sem isso, acentos como "ã" e "ç" podem aparecer quebrados -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Permite que a página seja responsiva em dispositivos móveis -->
+    <!-- Faz a página se adaptar ao tamanho da tela do celular (responsividade) -->
 
-    <title>Etch-a-Sketch</title>
-    <!-- Título da aba do navegador -->
+    <title>Pixel Painter</title>
+    <!-- Texto que aparece na aba do navegador -->
 
     <link rel="stylesheet" href="style.css">
-    <!-- Link para o arquivo CSS que estiliza a página -->
+    <!-- Carrega o arquivo de estilos externo. Sem ele, a página fica sem visual -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Biblioteca de ícones (Font Awesome). Permite usar ícones como <i class="fa-solid fa-paintbrush"> -->
 </head>
 
 <body>
-<!-- Corpo da página -->
+    <!-- Tudo que está aqui aparece visualmente na página -->
 
-<header>
-    <h1>Etch-a-Sketch</h1>
-    <!-- Título principal do projeto -->
-</header>
+    <header>
+        <h1>Pixel Painter</h1>
+        <!-- Cabeçalho da página com o nome do app -->
+    </header>
 
-<section>
-    <!-- Card principal da página (estilizado pelo CSS) -->
+    <section>
+        <!-- Agrupa semanticamente o conteúdo principal da aplicação -->
 
-    <!-- ===== FORMULÁRIO DE GRID ===== -->
-    <div id="grid" class="grid">
-        <p>Grid size:</p>
-        <!-- Texto explicativo -->
+        <!-- ===== FORMULÁRIO DE CONFIGURAÇÃO DA GRID ===== -->
+        <div id="grid" class="grid">
+            <!-- Bloco onde o usuário define o tamanho da grade de pixels -->
 
-        <input type="text" id="user-number" class="user-number">
-        <!-- Input para o usuário digitar o tamanho da grid -->
+            <p>Grid size:</p>
 
-        <p id="copy-input"></p>
-        <!-- Parágrafo vazio, usado dinamicamente para mensagens -->
+            <input type="text" id="user-number" class="user-number">
+            <!-- Campo de texto onde o usuário digita um número (ex: 16 para uma grade 16x16) -->
 
-        <button id="user-submit" class="user-submit">Submit</button>
-        <!-- Botão para enviar o tamanho da grid -->
-    </div>
+            <p id="copy-input"></p>
+            <!-- Parágrafo inicialmente vazio. O JavaScript usa isso para exibir mensagens de erro ou confirmação -->
 
-    <div>
-        <!-- Container de prompt, botões e canvas -->
-
-        <p id="prompt"></p>
-        <!-- Mensagens dinâmicas (ex: avisos ou erros) -->
-
-        <!-- ===== SELETOR DE CORES E BOTÃO CLEAR ===== -->
-        <div id="buttons">
-            <form id="button-container">
-                <!-- Grupo de inputs tipo radio para escolher a “caneta” -->
-                <input type="radio" id="black-color" name="pen" value="black-color">
-                <label for="black-color">Black</label>
-
-                <input type="radio" id="red-color" name="pen" value="red-color">
-                <label for="red-color">Red</label>
-
-                <input type="radio" id="blue-color" name="pen" value="blue-color">
-                <label for="blue-color">Blue</label>
-
-                <input type="radio" id="rainbow-color" name="pen" value="rainbow">
-                <label for="rainbow-color">Rainbow</label>
-
-                <input type="radio" id="eraser" name="pen" value="eraser">
-                <label for="eraser">Eraser</label>
-            </form>
-
-            <button id="clear-button">Clear</button>
-            <!-- Botão para limpar o canvas -->
+            <button id="user-submit" class="user-submit">Submit</button>
+            <!-- Ao clicar, o JS lê o valor do input acima e gera a grade -->
         </div>
 
-        <!-- ===== CANVAS ===== -->
-        <div class="canvas">
-            <div class="container">
-                <!-- Grid do Etch-a-Sketch será criada dinamicamente pelo JavaScript -->
+        <div>
+            <!-- Wrapper que agrupa prompt, toolbar, paleta e o canvas de desenho -->
+
+            <p id="prompt"></p>
+            <!-- Área de feedback dinâmico — o JS escreve avisos aqui quando necessário -->
+
+            <!-- ===== BARRA DE FERRAMENTAS ===== -->
+            <div id="toolbar">
+
+                <div id="tool-buttons">
+                    <!-- Cada botão representa uma ferramenta de desenho.
+                         O atributo "title" aparece como tooltip ao passar o mouse.
+                         Os ícones vêm da Font Awesome (classe "fa-solid fa-...") -->
+
+                    <button id="tool-brush"      class="tool-btn" title="Pincel">
+                        <i class="fa-solid fa-paintbrush"></i>
+                    </button>
+
+                    <button id="tool-eraser"     class="tool-btn" title="Borracha">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+
+                    <button id="tool-fill"       class="tool-btn" title="Balde">
+                        <!-- Preenche uma área inteira com a cor selecionada (flood fill) -->
+                        <i class="fa-solid fa-fill-drip"></i>
+                    </button>
+
+                    <button id="tool-eyedropper" class="tool-btn" title="Conta-gotas">
+                        <!-- Captura a cor de um pixel já pintado e a define como cor ativa -->
+                        <i class="fa-solid fa-eye-dropper"></i>
+                    </button>
+
+                    <button id="tool-line"       class="tool-btn" title="Linha reta">
+                        <!-- Desenha uma linha reta entre dois pontos clicados -->
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                </div>
+
+                <div id="action-buttons">
+                    <!-- Ações globais que afetam o canvas inteiro -->
+                    <button id="clear-button">Clear</button>
+                    <!-- Limpa todo o canvas, voltando ao estado em branco -->
+
+                    <button id="save-button">💾 Save</button>
+                    <!-- Exporta o desenho atual como imagem (normalmente PNG) -->
+                </div>
+
             </div>
+
+            <!-- ===== PALETA DE CORES (GODET) ===== -->
+            <div id="palette">
+
+                <input type="color" id="color-picker" value="#2e2b2b" title="Escolher cor">
+                <!-- Input nativo do navegador que abre um seletor de cores.
+                     O "value" define a cor inicial (um cinza escuro quase preto) -->
+
+                <div id="godet">
+                    <!-- "Godet" é a bandeja de cores do pintor. Aqui são 10 slots
+                         onde o usuário pode salvar suas cores favoritas para reutilizar rapidamente -->
+
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <div class="godet-slot" title="Slot vazio"></div>
+                    <!-- O JS preenche o fundo de cada slot com a cor salva e
+                         adiciona o evento de clique para selecionar aquela cor -->
+                </div>
+
+                <button id="save-color-btn" title="Salvar cor na godet">+ Save Color</button>
+                <!-- Salva a cor atualmente selecionada no color-picker em um dos slots acima -->
+
+            </div>
+
+            <!-- ===== CANVAS DE DESENHO ===== -->
+            <div class="canvas">
+                <div class="container">
+                    <!-- Grid vazia por padrão. O JavaScript cria dinamicamente os
+                         elementos <div> que formam os pixels quando o usuário submete
+                         o tamanho da grade. Cada <div> filho representa um pixel clicável -->
+                </div>
+            </div>
+
         </div>
 
-    </div>
+    </section>
 
-</section>
+    <footer>
+        <p>&copy; 2026 Alefe Pereira for TheOdinProject</p>
+        <!-- &copy; é o símbolo © em HTML. Rodapé com créditos do autor -->
+    </footer>
 
-<footer>
-    <p>&copy; 2026 Alefe Pereira for TheOdinProject</p>
-    <!-- Rodapé com créditos -->
-</footer>
-
-<script src="script.js"></script>
-<!-- Arquivo JavaScript que controla a lógica do Etch-a-Sketch -->
+    <script src="script.js"></script>
+    <!-- Carregado no final do <body> para garantir que todos os elementos HTML
+         já existam no DOM antes de o JavaScript tentar acessá-los -->
 
 </body>
 </html>

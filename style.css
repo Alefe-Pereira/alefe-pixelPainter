@@ -1,125 +1,210 @@
 /* ===== BODY ===== */
 body {
-    margin: 0; /* Remove a margem padrão do navegador */
-    padding: 0; /* Remove o padding padrão */
-    background: rgb(72, 170, 167); /* Cor de fundo principal da página */
-    font: normal 15pt Arial; /* Define a fonte padrão do corpo da página */
-    display: flex; /* Transforma o body em um container flexível */
-    flex-direction: column; /* Organiza os elementos verticalmente */
-    align-items: center; /* Centraliza os elementos horizontalmente */
+    margin: 0;
+    padding: 0;
+    background: rgb(72, 170, 167);
+    font: normal 15pt Arial;
+    display: flex;
+    flex-direction: column; /* Empilha header, section e footer verticalmente */
+    align-items: center;    /* Centraliza tudo horizontalmente na página */
 }
 
 /* ===== HEADER ===== */
 header {
-    color: white; /* Cor do texto do cabeçalho */
-    text-align: center; /* Centraliza o texto do header */
-    margin-top: 20px; /* Espaço acima do header */
+    color: white;
+    text-align: center;
+    margin-top: 20px;
 }
 
-/* ===== SECTION (seu card principal) ===== */
+/* ===== SECTION (card branco central) ===== */
 section {
-    background: white; /* Cor de fundo do card principal */
-    border-radius: 10px; /* Bordas arredondadas do card */
-    padding: 20px; /* Espaço interno do card */
-    width: 500px; /* Largura fixa do card */
-    margin: 20px auto; /* Margem em cima e embaixo; centraliza horizontalmente */
-    box-shadow: rgba(0, 0, 0, 0.436) 5px 5px 10px; /* Sombra para dar profundidade */
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 500px;
+    margin: 20px auto;
+    box-shadow: rgba(0, 0, 0, 0.436) 5px 5px 10px;
+    /* Sombra: cor semi-transparente, 5px para direita, 5px para baixo, 10px de blur */
 
-    display: flex; /* Flex container interno */
-    flex-direction: column; /* Organiza os itens do card em coluna */
-    align-items: center; /* Centraliza itens horizontalmente */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* ===== GRID ===== */
+/* ===== ÁREA DE INPUT DO TAMANHO DA GRID ===== */
 .grid {
-    display: flex; /* Flex container para alinhar inputs e botões */
-    align-items: center; /* Alinha verticalmente os itens do grid */
-    justify-content: center; /* Centraliza horizontalmente */
-    margin-bottom: 10px; /* Espaço abaixo do grid */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .grid p {
-    margin: 0; /* Remove a margem padrão do parágrafo dentro do grid */
+    margin: 0; /* Parágrafo dentro do flex perde a margem padrão para não desalinhar */
 }
 
 .user-number {
-    width: 40px; /* Largura do input numérico */
-    border: 2px solid rgb(71, 69, 69); /* Borda do input */
-    margin: 0 8px; /* Espaço lateral entre elementos */
-    border-radius: 4px; /* Bordas arredondadas do input */
-    text-align: center; /* Centraliza o número digitado */
+    width: 40px;
+    border: 2px solid rgb(71, 69, 69);
+    margin: 0 8px; /* Separa o input do texto e do botão */
+    border-radius: 4px;
+    text-align: center;
 }
 
 .user-submit {
-    padding: 4px 8px; /* Espaço interno do botão */
-    background-color: rgb(220, 254, 255); /* Cor de fundo do botão */
-    border-radius: 4px; /* Bordas arredondadas do botão */
-    border: 2px solid rgb(71, 69, 69); /* Borda do botão */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    padding: 4px 8px;
+    background-color: rgb(220, 254, 255);
+    border-radius: 4px;
+    border: 2px solid rgb(71, 69, 69);
+    cursor: pointer; /* Muda o cursor para mãozinha — indica elemento clicável */
 }
 
 #copy-input {
-    margin-right: 10px; /* Espaço à direita do input para separar do botão */
+    margin-right: 10px;
 }
 
-/* ===== PROMPT ===== */
+/* ===== MENSAGEM DE FEEDBACK ===== */
 #prompt {
-    font-size: 18px; /* Tamanho da fonte */
-    color: rgb(72, 170, 167); /* Cor  para  destacar */
-    text-align: center; /* Centraliza o texto */
+    font-size: 18px;
+    color: rgb(72, 170, 167); /* Mesma cor do fundo da página, cria coerência visual */
+    text-align: center;
 }
 
-/* ===== BOTÕES ===== */
+/* ===== ESTILO BASE DE TODOS OS BOTÕES ===== */
+/* Regra genérica que se aplica a qualquer <button> da página */
 button {
-    padding: 4px 8px; /* Espaço interno do botão */
-    background-color: rgb(220, 254, 255); /* Cor de fundo */
-    border-radius: 4px; /* Bordas arredondadas */
-    border: 2px solid rgb(71, 69, 69); /* Borda do botão */
-    cursor: pointer; /* Cursor de mãozinha */
+    padding: 4px 8px;
+    background-color: rgb(220, 254, 255);
+    border-radius: 4px;
+    border: 2px solid rgb(71, 69, 69);
+    cursor: pointer;
 }
 
-#buttons {
-    display: flex; /* Flex container para os botões */
-    align-items: center; /* Alinha verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    gap: 10px; /* Espaçamento entre os botões */
-    margin-bottom: 15px; /* Espaço abaixo do container */
-    flex-wrap: wrap; /* Permite que os botões quebrem linha se necessário */
-}
-
-/* ===== CANVAS ===== */
+/* ===== CANVAS (área de desenho) ===== */
 .canvas {
-    display: flex; /* Flex container para centralizar o canvas */
-    justify-content: center; /* Centraliza horizontalmente */
+    display: flex;
+    justify-content: center;
 }
 
-/* Área do desenho */
 .container {
-    height: 400px; /* Altura do canvas */
-    width: 400px; /* Largura do canvas */
-    display: flex; /* Flex container para linhas e colunas */
-    flex-direction: column; /* Organiza linhas em coluna */
-    border: 15px solid rgb(150, 142, 142); /* Borda grossa ao redor do canvas */
-    border-radius: 14px; /* Bordas arredondadas do canvas */
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column; /* As linhas da grid são empilhadas verticalmente */
+    border: 15px solid rgb(150, 142, 142);
+    border-radius: 14px;
 }
 
-/* Linhas da grid */
+/* Cada linha horizontal da grid */
 .row {
-    display: flex; /* Cada linha será flex container de colunas */
-    flex: 1; /* Cada linha ocupa igualmente o espaço disponível */
+    display: flex; /* As células ficam lado a lado dentro da linha */
+    flex: 1;       /* Todas as linhas dividem igualmente a altura do container */
 }
 
-/* Células padrão */
+/* Cada célula (pixel) da grid */
 .column {
-    border: 1px solid rgb(243, 239, 239); /* Borda leve para separar células */
-    flex: 1; /* Cada coluna ocupa igualmente o espaço da linha */
+    border: 1px solid rgb(243, 239, 239); /* Borda quase branca — divisória sutil entre pixels */
+    flex: 1; /* Todas as células dividem igualmente a largura da linha */
 }
-
 
 /* ===== FOOTER ===== */
 footer {
-    color: white; /* Cor do texto do rodapé */
-    text-align: center; /* Centraliza o texto do footer */
-    font-style: italic; /* Deixa o texto em itálico */
-    margin-bottom: 20px; /* Espaço abaixo do footer */
+    color: white;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+/* ===== TOOLBAR ===== */
+#toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Empurra ferramentas para a esquerda e ações para a direita */
+    width: 100%;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+#tool-buttons {
+    display: flex;
+    gap: 6px; /* Espaço entre os botões de ferramenta */
+}
+
+#action-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.tool-btn {
+    font-size: 18px; /* Aumenta o ícone Font Awesome dentro do botão */
+    padding: 6px 10px;
+    background-color: rgb(220, 254, 255);
+    border: 2px solid rgb(71, 69, 69);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* O JS adiciona a classe "active" ao botão da ferramenta selecionada */
+.tool-btn.active {
+    background-color: rgb(72, 170, 167); /* Destaque visual da ferramenta em uso */
+    border-color: rgb(30, 100, 98);
+}
+
+/* ===== PALETA DE CORES (GODET) ===== */
+#palette {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Quebra linha se a tela for pequena demais */
+}
+
+#color-picker {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgb(71, 69, 69);
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 2px;
+    background: none; /* Remove o fundo padrão do input para mostrar só a cor */
+}
+
+#godet {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+/* Cada slot individual de cor salva */
+.godet-slot {
+    width: 28px;
+    height: 28px;
+    border: 2px solid rgb(71, 69, 69);
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: white; /* Branco = slot ainda vazio */
+    transition: transform 0.1s; /* Suaviza a animação do :hover abaixo */
+    position: relative; /* Necessário para posicionar o ::after (ícone de ×) */
+}
+
+/* Slot ganha um leve zoom ao passar o mouse */
+.godet-slot:hover {
+    transform: scale(1.15);
+}
+
+/* Slot selecionado como cor ativa ganha borda colorida */
+.godet-slot.active {
+    border-color: rgb(72, 170, 167);
+    border-width: 3px;
+}
+
+/* Mostra um × discreto sobre slots que já têm cor salva (sinaliza que dá pra limpar) */
+/* O atributo data-color é adicionado pelo JS quando o slot recebe uma cor */
+.godet-slot[data-color]:hover::after {
+    content: '✕';
+    font-size: 10px;
+    color: rgba(0,0,0,0.4);
+    position: absolute; /* Posicionado relativo ao .godet-slot (que tem position: relative) */
+    top: 1px;
+    right: 2px;
 }
