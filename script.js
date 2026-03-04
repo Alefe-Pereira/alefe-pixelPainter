@@ -33,7 +33,8 @@ let state = {
     activeTool  : 'brush',   // Qual ferramenta está selecionada
     activeColor : '#2e2b2b', // Qual cor está selecionada
     isDrawing   : false,     // O mouse está pressionado? (usado pela ferramenta linha)
-    lineStart   : null       // Célula onde a linha reta começou
+    lineStart   : null,      // Célula onde a linha reta começou
+    history     : []
 }
 
 
@@ -70,10 +71,17 @@ godetSlots.forEach(slot => {
     slot.addEventListener('dblclick',() => removeColorFromGodet(slot)); // Duplo clique remove
 });
 
+// ---- DESFAZER PINTURA ----
+document.addEventListener('keyup', (e) => {
+    if (e.ctrlKey && e.key === 'z'){
+        e.preventDefault(); 
+        undo();}
+});
+
 // ---- INICIALIZAÇÃO ----
 // Executa assim que o script carrega, criando a grade padrão e ativando o desenho
 makeGrid();
-draw();
+
 
 
 // ============================================================
@@ -189,7 +197,7 @@ function handleMouseOver(cell, e) {
     // A linha só é desenhada no mouseup, não durante o arrastar
     if (state.activeTool === 'line') return;
 
-    paintCell(cell);
+
 }
 
 // Disparado ao soltar o botão do mouse
@@ -204,25 +212,15 @@ function handleMouseUp(cell) {
 }
 
 function handleMouseEnter(cell) {
-    if (state.activeTool === 'eraser' || state.activeTool === 'eyedropper') return;
+    
 
-    // Se o mouse está pressionado ao entrar na célula, pinta de verdade e não mostra preview
-    if (state.isDrawing) return;
-
-    // Guarda a cor original para restaurar se o usuário não clicar
-    cell.dataset.preview = cell.style.backgroundColor || '';
-
-    // Preview: mostra a cor com opacidade reduzida
-    cell.style.opacity = '0.6';
-    cell.style.backgroundColor = state.activeColor;
-}
-
-function handleMouseEnter(cell) {
-    if (state.activeTool === 'eraser' || state.activeTool === 'eyedropper') return;
-
-    // Usa outline em vez de backgroundColor — não interfere com a cor real do pixel
+if (state.activeTool === 'eraser' || state.activeTool === 'eyedropper') {
+    cell.style.outline = '2px solid #ffffff';
+    cell.style.zIndex  = '1';
+} else {
     cell.style.outline = `2px solid ${state.activeColor}`;
     cell.style.zIndex  = '1';
+}
 }
 
 function handleMouseLeave(cell) {
@@ -233,14 +231,24 @@ function handleMouseLeave(cell) {
 
 function paintCell(cell) {
     if (state.activeTool === 'brush') {
+        state.history.push({ cell: cell, color: cell.style.backgroundColor });
         cell.style.backgroundColor = state.activeColor;
         cell.style.outline = '';
         cell.style.zIndex  = '';
     } else if (state.activeTool === 'eraser') {
+        state.history.push({ cell: cell, color: cell.style.backgroundColor });
         cell.style.backgroundColor = '';
         cell.style.outline = '';
         cell.style.zIndex  = '';
     }
+
+    console.log('paintCell chamado')
+    
+}
+
+function undo() {
+    let last = state.history.pop();
+    last.cell.style.backgroundColor = last.color;
 }
 
 
